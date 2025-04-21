@@ -1,0 +1,8 @@
+.admin-container {
+    height: calc(100vh - 64px);
+    margin-top: 8px;
+  }
+  mat-sidenav {
+    width: 200px;
+  }
+  
