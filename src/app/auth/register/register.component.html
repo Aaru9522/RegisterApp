@@ -1,56 +1,71 @@
-<div class="register-form">
-    <h2>Register</h2>
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Username</mat-label>
-        <input matInput formControlName="username">
-        <mat-error *ngIf="f['username'].touched && f['username'].errors?.['required']">
-          Username is required.
-        </mat-error>
-        <mat-error *ngIf="f['username'].touched && f['username'].errors?.['minlength']">
-          Minimum {{ f['username'].errors?.['minlength']?.requiredLength }} chars.
-        </mat-error>
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" type="email">
-        <mat-error *ngIf="f['email'].touched && f['email'].errors?.['required']">
-          Email is required.
-        </mat-error>
-        <mat-error *ngIf="f['email'].touched && f['email'].errors?.['email']">
-          Invalid email format.
-        </mat-error>
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
-        <input matInput formControlName="password" type="password">
-        <mat-error *ngIf="f['password'].touched && f['password'].errors?.['required']">
-          Password is required.
-        </mat-error>
-        <mat-error *ngIf="f['password'].touched && f['password'].errors?.['minlength']">
-          Minimum {{ f['password'].errors?.['minlength']?.requiredLength }} chars.
-        </mat-error>
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Confirm Password</mat-label>
-        <input matInput formControlName="confirm" type="password">
-        <mat-error *ngIf="registerForm.errors?.['mismatch'] && f['confirm'].touched">
-          Passwords do not match.
-        </mat-error>
-      </mat-form-field>
-  
-      <button mat-raised-button color="primary" type="submit">
-        Register
-      </button>
-    </form>
-  
-    <p *ngIf="registrationSuccess" class="success">
-      Registration successful!
-    </p>
-    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+<h2>{{ id ? 'Edit User #' + id : 'Register' }}</h2>
+
+<!-- ngIf example -->
+<label>
+  <input type="checkbox" [(ngModel)]="showAdvanced">
+  Show advanced options
+</label>
+
+<div *ngIf="showAdvanced" class="advanced">
+  <p>Select your country:</p>
+  <!-- ngFor example -->
+  <select [(ngModel)]="selectedCountry">
+    <option *ngFor="let c of countries" [value]="c">{{ c }}</option>
+  </select>
+  <p [ngStyle]="{ 'font-weight': 'bold' }">
+    Selected:
+    <!-- ngClass example -->
+    <span [ngClass]="{ highlight: selectedCountry === 'Canada' }">
+      {{ selectedCountry || 'none' }}
+    </span>
+  </p>
+</div>
+
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Username</mat-label>
+    <input matInput formControlName="username">
+    <mat-error *ngIf="f['username'].touched && f['username'].errors?.['required']">
+      Username is required.
+    </mat-error>
+    <mat-error *ngIf="f['username'].errors?.['minlength']">
+      Minimum {{ f['username'].errors?.['minlength']?.requiredLength }} chars.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" formControlName="email">
+    <mat-error *ngIf="f['email'].errors?.['required']">Email is required.</mat-error>
+    <mat-error *ngIf="f['email'].errors?.['email']">Invalid email.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput type="password" formControlName="password">
+    <mat-error *ngIf="f['password'].errors?.['required']">Password is required.</mat-error>
+    <mat-error *ngIf="f['password'].errors?.['minlength']">
+      Minimum {{ f['password'].errors?.['minlength']?.requiredLength }} chars.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Confirm Password</mat-label>
+    <input matInput type="password" formControlName="confirm">
+    <mat-error *ngIf="registerForm.errors?.['mismatch'] && f['confirm'].touched">
+      Passwords do not match.
+    </mat-error>
+  </mat-form-field>
+
+  <!-- ngSwitch example -->
+  <div [ngSwitch]="countries.length">
+    <small *ngSwitchCase="0">No countries available</small>
+    <small *ngSwitchCase="1">One country only</small>
+    <small *ngSwitchDefault>{{ countries.length }} countries to choose</small>
   </div>
-  
+
+  <button mat-raised-button color="primary" type="submit">
+    {{ id ? 'Save' : 'Register' }}
+  </button>
+</form>

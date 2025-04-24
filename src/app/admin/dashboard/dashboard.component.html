@@ -1,12 +1,8 @@
-<mat-toolbar color="accent">Admin Dashboard</mat-toolbar>
-<mat-sidenav-container class="admin-container">
-  <mat-sidenav mode="side" opened>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/admin">Overview</a>
-      <!-- add more links here -->
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <p>Welcome to the Admin area!</p>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<mat-card>
+  <mat-card-title>Admin Dashboard</mat-card-title>
+  <mat-card-content><p>Secure area.</p></mat-card-content>
+
+  <p>
+    <a href="/amazon" (click)="onAmazonClick($event)">Go to Amazon</a>
+  </p>
+</mat-card>
